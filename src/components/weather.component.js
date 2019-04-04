@@ -6,12 +6,20 @@ class Weather extends React.Component {
 
         return(
             <div className={this.props.context}>
-                <h1> {this.props.country} </h1>
-                <h1> {this.props.city} </h1>
-                <h1> {this.props.temp} </h1>
-                <h1> {this.props.sunrise} </h1>
-                <h1> {this.props.sunset} </h1>
-                <h1> {this.props.error} </h1>
+                { this.props.city &&
+                    <div>
+                        <h2> Location </h2>
+                        <h3> {this.props.country} </h3>
+                        <h3> {this.props.city} </h3>
+                        <h2> Weather </h2>
+                        <h3> {this.props.temp} </h3>
+                        <h2>Sunrise</h2>
+                        <h3> {this.props.sunrise} </h3>
+                        <h2>Sunset</h2>
+                        <h3> {this.props.sunset} </h3>
+                        <h3> {this.props.error} </h3>
+                    </div>
+                }
             </div>
         );
     }

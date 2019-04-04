@@ -21,18 +21,31 @@ class App extends React.Component {
   gettingweather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
-    const api_url = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
-    const data = await api_url.json();
-    console.log(data);
-    this.temperature = Math.round(data.main.temp - 273.150);
-    this.setState({
-        temp: Math.round(data.main.temp - 273.150),
-        city: data.name,
-        country: data.sys.country,
-        sunrise: data.sys.sunrise,
-        sunset: data.sys.sunset,
-        error: "",
-    })
+
+    if (city) {
+        const api_url = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
+        const data = await api_url.json();
+        console.log(data);
+        // conversion for sunset
+        var sunset = data.sys.sunset;
+        var date_ss = new Date()
+        date_ss.setTime(sunset * 1000);
+        var sunset_date = date_ss.getHours() + ":" + date_ss.getMinutes();
+        // conversion for sunrise
+        var sunrise = data.sys.sunrise;
+        var date_sr = new Date()
+        date_sr.setTime(sunrise * 1000);
+        var sunrise_date = date_sr.getHours() + ":" + date_sr.getMinutes();
+
+        this.setState({
+            temp: Math.round(data.main.temp - 273.150),
+            city: data.name,
+            country: data.sys.country,
+            sunrise: sunrise_date,
+            sunset: sunset_date,
+            error: "",
+        })
+    }
   }
 
   render() {
